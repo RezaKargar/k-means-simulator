@@ -10,11 +10,15 @@ window.onresize = () => {
 	canvas.height = window.innerHeight;
 };
 
-const points = [];
-let centroids = [];
-let clusters = {};
+let points;
+let centroids;
+let clusters;
+let sse;
 
 let COLORS;
+
+let steps;
+let currentStepOfKMean;
 
 window.onclick = (e) => {
 	const point = new Point(e.clientX, e.clientY);
@@ -26,9 +30,9 @@ window.onclick = (e) => {
 init();
 
 function init() {
-	centroids = [];
-	clusters = {};
-	COLORS = ["red", "purple", "olive", "blue", "darkorange", "green"];
+	reset(true);
+	loadCurrentStateFromLocalStorage();
+
 	render();
 }
 
@@ -37,6 +41,18 @@ function render() {
 	points.forEach(drawPoint);
 	centroids.forEach(drawCentroid);
 	requestAnimationFrame(render);
+}
+
+function reset(shouldResetPoints = false){
+	shouldResetPoints && (points = []);
+	centroids = [];
+	clusters = {};
+	COLORS = ["red", "purple", "olive", "blue", "darkorange", "green"];
+	sse = null;
+
+	steps = {
+		KMeans: [],
+	};
 }
 
 function drawPoint(point) {
@@ -87,11 +103,10 @@ function initCentroids(k) {
 			);
 
 			if (COLORS.length > 0) {
-				const color =
-					COLORS[Math.floor(Math.random() * COLORS.length)];
+				const color = COLORS[Math.floor(Math.random() * COLORS.length)];
 				centroid.color = color;
 
-				COLORS = COLORS.filter(c => c != color);
+				COLORS = COLORS.filter((c) => c != color);
 			} else {
 				centroid.color =
 					"#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -117,18 +132,107 @@ function resetCentroid(centroid) {
 }
 
 function KMeans(k) {
-	init();
+	reset();
 	initCentroids(k);
-	let isClusterChangedForAPoint = clusterPoints();
-	let shouldStop = !isClusterChangedForAPoint;
+	saveStep();
 
-	while (!shouldStop) {
-		let anyCentroidRepositioned = repositionCentroids();
+	let shouldStop;
+	do {
 		isClusterChangedForAPoint = clusterPoints();
+		let anyCentroidRepositioned = repositionCentroids();
 
 		shouldStop = !anyCentroidRepositioned || !isClusterChangedForAPoint;
-		render();
+
+		if (!shouldStop) {
+			let sse = calculateSumOfSquaredError();
+			saveStep(sse);
+		}
+	} while (!shouldStop);
+
+	saveCurrentStateToLocalStorage();
+}
+
+function calculateSumOfSquaredError() {
+	let result = 0;
+	for (const clusterName in clusters) {
+		if (!Object.hasOwnProperty.call(clusters, clusterName)) return;
+
+		const cluster = clusters[clusterName];
+		let squaredError = 0;
+		cluster.points.forEach((point) => {
+			squaredError += distance(point, cluster.centroid);
+		});
+
+		result += squaredError;
 	}
+
+	return result;
+}
+
+function saveCurrentStateToLocalStorage(){
+	const stepsToSave = JSON.stringify(steps);
+	localStorage.setItem('steps', stepsToSave);
+}
+
+function loadCurrentStateFromLocalStorage(){
+	steps = JSON.parse(localStorage.getItem('steps'));
+	steps && loadStep(steps.KMeans.length - 1);
+}
+
+
+function saveStep() {
+	currentStepOfKMean = deepCopy({
+		stepId: steps["KMeans"].length,
+		clusters,
+		points,
+		centroids,
+		sse,
+	});
+
+	steps.KMeans.push(currentStepOfKMean);
+}
+
+function loadNextStep() {
+	const currentStepId = currentStepOfKMean.stepId;
+
+	const nextStepId = currentStepId + 1;
+
+	const isThereAnyNextStep = nextStepId < steps.KMeans.length;
+	if (!isThereAnyNextStep) {
+		console.info("There is no next step!");
+		return;
+	}
+
+	loadStep(nextStepId);
+}
+
+function loadPreviousStep() {
+	const currentStepId = currentStepOfKMean.stepId;
+
+	const previousStepId = currentStepId - 1;
+
+	const isThereAnyPerviousStep = previousStepId >= 0;
+	if (!isThereAnyPerviousStep) {
+		console.info("There is no previous step!");
+		return;
+	}
+
+	loadStep(previousStepId);
+}
+
+function loadStep(stepId) {
+	currentStepOfKMean = steps.KMeans[stepId];
+
+	points = currentStepOfKMean.points;
+	centroids = currentStepOfKMean.centroids;
+	clusters = currentStepOfKMean.clusters;
+}
+
+function deepCopy(item) {
+	let stringified = JSON.stringify(item);
+	let reParsed = JSON.parse(stringified);
+
+	return reParsed;
 }
 
 function clusterPoints() {
