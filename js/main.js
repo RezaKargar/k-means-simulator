@@ -470,7 +470,7 @@ function handleRunButtonClick() {
 
 	if (algorithm == ALGORITHMS.kmeans) {
 		if (mode == RUN_MODES.just_result) {
-			updateRunInfo(true, true);
+			document.getElementById("run-info").style.display = "none";
 			KMeans(clusterCount);
 			drawSSEChart();
 		} else if (mode == RUN_MODES.animational) {
@@ -812,7 +812,7 @@ function drawSSEOnChart(stepId) {
 	chartCtx.stroke();
 }
 
-function drawSSEsChartUntilStepId(stepId){
+function drawSSEsChartUntilStepId(stepId) {
 	initSSEChart();
 	for (let index = 0; index < stepId; index++) {
 		drawSSEOnChart(index);
