@@ -1,17 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Means</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>K-Means</title>
 
-    <link rel="stylesheet" href="styles/style.css">
-</head>
-<body>
-    
+		<link rel="stylesheet" href="styles/style.css" />
+	</head>
+	<body>
+		<header id="menu">
+			<section id="algorithms-section">
+				<label for="algorithm"> Clustring algorithm: </label>
+				<select name="algorithm" id="algorithm">
+					<option value="kmeans">K-Means</option>
+					<option value="kmedoids">K-Medoids</option>
+					<option value="xmeans">X-Means</option>
+				</select>
+			</section>
 
-    <script src="js/point.js"></script>
-    <script src="js/main.js"></script>
-</body>
+			<section id="algorithms-options-section">
+				<label for="clusters-count"> Clusters count: </label>
+				<input
+					type="text"
+					name="clusters-count"
+					id="clusters-count"
+					value="2"
+				/>
+			</section>
+
+			<section id="run-modes-section" onchange="handleChangeOfRunModes()">
+				<label for="run-mode"> Run modes: </label>
+				<select name="run-mode" id="run-mode">
+					<option value="just-result">Just Result</option>
+					<option value="animational">Animational</option>
+					<option value="step-by-step">Step By Step</option>
+				</select>
+			</section>
+
+			<section id="run-modes-extra-options-section" hidden>
+				<section id="speed-option-section">
+					<label for="speed"> Amination speed: </label>
+					<select name="speed" id="speed">
+						<option value="0.5">0.5x</option>
+						<option value="1" selected="selected">1x</option>
+						<option value="2">2x</option>
+					</select>
+				</section>
+			</section>
+
+			<section id="buttons-section">
+				<button
+					class="action-button"
+					id="run"
+					onclick="handleRunButtonClick()"
+				>
+					Run
+				</button>
+
+				<div
+					class="action-button"
+					id="pause-play-button-wrapper"
+					title="Press 'P' or 'Space'"
+					onclick="handlePausePlayButtonClick()"
+				>
+					<button class="playing" id="pause-play-button" />
+				</div>
+
+				<div id="next-previous-buttons-wrapper">
+					<button
+						class="action-button"
+						id="first-button"
+						onclick="handleFirstButtonClick()"
+						disabled
+					>
+						<<
+					</button>
+
+					<button
+						class="action-button"
+						id="previous-button"
+						onclick="handlePreviousButtonClick()"
+						disabled
+					>
+						<
+					</button>
+
+					<button
+						class="action-button"
+						id="stop-button"
+						onclick="handleStopButtonClick()"
+					>
+						stop
+					</button>
+
+					<button
+						class="action-button"
+						id="next-button"
+						onclick="handleNextButtonClick()"
+					>
+						>
+					</button>
+
+					<button
+						class="action-button"
+						id="last-button"
+						onclick="handleLastButtonClick()"
+					>
+						>>
+					</button>
+				</div>
+			</section>
+		</header>
+
+		<section id="run-info">
+			<section id="iteraction-into-section">
+				<label>Iteration #<span id="iteration-number"></span></label>
+			</section>
+
+			<section id="sse-section">
+				<label>SSE: <span id="sse"></span></label>
+			</section>
+		</section>
+        <section id="chart">
+            
+        </section>
+		<script src="js/point.js"></script>
+		<script src="js/main.js"></script>
+	</body>
 </html>

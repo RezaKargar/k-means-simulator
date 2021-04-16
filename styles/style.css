@@ -3,8 +3,161 @@ body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
+	overflow: hidden;
 }
 
 canvas {
 	background-color: #ececec;
+}
+
+header#menu {
+	width: 100%;
+	height: 50px;
+	position: fixed;
+	top: 0;
+	background: rgba(30, 214, 76, 0.438);
+	box-shadow: inset 0 -2px 5px rgb(0 0 0 / 33%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+header#menu section:not(:first-child) {
+	padding-left: 20px;
+}
+
+header#menu #algorithms-section {
+	padding-right: 20px;
+}
+
+header#menu input#clusters-count {
+	border-radius: 5px;
+	border: none;
+	background-color: wheat;
+	width: 50px;
+}
+
+header#menu select {
+	background: wheat;
+	width: 100px;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+}
+
+header#menu input,
+header#menu select {
+	outline: none;
+	height: 20px;
+}
+
+header#menu #run-modes-extra-options-section #speed-option-section select {
+	width: 50px;
+}
+
+header#menu #buttons-section {
+	position: absolute;
+	right: 10px;
+}
+
+header#menu #buttons-section .action-button {
+	display: inline-block;
+	margin-left: 10px;
+	width: 100px;
+	padding: 5px 2px;
+	background-color: rgb(146, 59, 228);
+	box-shadow: inset 0 -2px 5px rgb(0 0 0 / 33%);
+	border-radius: 5px;
+	color: white;
+	border-style: none;
+	cursor: pointer;
+}
+
+header#menu #buttons-section button.action-button:hover {
+	background-color: rgb(118, 30, 201);
+}
+
+header#menu #buttons-section #pause-play-button-wrapper.action-button {
+	padding: 5px 2px;
+	width: 30px;
+	align-items: center;
+	justify-content: center;
+	display: none;
+}
+
+header#menu
+	#buttons-section
+	#pause-play-button-wrapper.action-button
+	button#pause-play-button {
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	width: 0;
+	height: 20px;
+	border-color: transparent transparent transparent white;
+	transition: 100ms all ease;
+	cursor: pointer;
+	border-style: solid;
+	border-width: 10px 0 10px 25px;
+	border-radius: 0%;
+	transform: translate(-10px, -3px);
+	margin: 0 50%;
+}
+
+header#menu
+	#buttons-section
+	#pause-play-button-wrapper.action-button
+	button#pause-play-button.playing {
+	border-style: double;
+	border-width: 0px 0 0px 20px;
+	transform: translate(-10px, 0px);
+}
+
+header#menu
+	#buttons-section
+	#pause-play-button-wrapper.action-button:hover
+	button#pause-play-button {
+	border-color: transparent transparent transparent rgb(192, 183, 183);
+}
+
+header#menu #buttons-section #next-previous-buttons-wrapper {
+	display: none;
+}
+
+header#menu #buttons-section #next-previous-buttons-wrapper button {
+	width: 30px;
+}
+
+
+header#menu #buttons-section #next-previous-buttons-wrapper button:disabled {
+	cursor: default;
+	background-color: gray;
+}
+
+#run-info {
+	width: 150px;
+	height: 100px;
+	background-color: rgb(226, 226, 176);
+	border-bottom-left-radius: 5px;
+	position: fixed;
+	top: 50px;
+	right: 0;
+	text-align: center;
+	display: none;
+}
+
+#run-info section {
+	padding-top: 15px;
+}
+
+#chart {
+	width: 200px;
+	height: 250px;
+	position: fixed;
+	top: 155px;
+	right: 0;
+}
+
+#chart canvas {
+	background-color: rgb(226, 226, 176);
 }
