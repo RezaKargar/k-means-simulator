@@ -1,5 +1,3 @@
-const POINTS_INITIAL_COLOR = 'black';
-
 class Point {
     constructor(x, y, color = POINTS_INITIAL_COLOR, cluster = null){
         this.x = x;
