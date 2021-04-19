@@ -10,6 +10,16 @@
 	</head>
 	<body>
 		<header id="menu">
+			<div id="reset-button-section">
+				<button
+					class="action-button"
+					id="reset"
+					onclick="handleResetButtonClick()"
+				>
+					Reset
+				</button>
+			</div>
+
 			<section id="algorithms-section">
 				<label for="algorithm"> Clustring algorithm: </label>
 				<select name="algorithm" id="algorithm">
@@ -122,9 +132,7 @@
 				<label>SSE: <span id="sse"></span></label>
 			</section>
 		</section>
-        <section id="chart">
-            
-        </section>
+		<section id="chart"></section>
 		<script src="js/point.js"></script>
 		<script src="js/main.js"></script>
 	</body>

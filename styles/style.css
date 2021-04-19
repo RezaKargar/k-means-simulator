@@ -60,7 +60,7 @@ header#menu #buttons-section {
 	right: 10px;
 }
 
-header#menu #buttons-section .action-button {
+.action-button {
 	display: inline-block;
 	margin-left: 10px;
 	width: 100px;
@@ -128,10 +128,18 @@ header#menu #buttons-section #next-previous-buttons-wrapper button {
 	width: 30px;
 }
 
-
 header#menu #buttons-section #next-previous-buttons-wrapper button:disabled {
 	cursor: default;
 	background-color: gray;
+}
+
+header#menu #reset-button-section {
+	left: 0;
+	position: absolute;
+}
+
+header#menu #reset-button-section #reset {
+	background-color: rgb(202, 29, 29);
 }
 
 #run-info {

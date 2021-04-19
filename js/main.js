@@ -818,3 +818,7 @@ function drawSSEsChartUntilStepId(stepId) {
 		drawSSEOnChart(index);
 	}
 }
+
+function handleResetButtonClick(){
+	reset(true, true, true);
+}
