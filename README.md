@@ -1,8 +1,8 @@
 # K-Means simulator
 
 ## Intro
-This simulator helps you to visualy see how clustering algorithms such as `K-Means`, `X-Means` and `K-Medoids` work.
-You can see each iteration of algorithms when their runnig or step by step iterate of steps of algorithms.
+This simulator helps you to visualy see how clustering algorithms such as `K-Means`, `X-Means` and `K-Medoids` works. <br>
+You can see each iteration of algorithms when their runnig or step by step iterate over steps of algorithms.
 
 
 ## Contirbution
